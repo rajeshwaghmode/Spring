@@ -1,8 +1,6 @@
 package com.java.learning.spring.springdata.springjpa.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
@@ -12,7 +10,11 @@ public class Employee {
 
     @Column
     private String name;
+    private Long salary;
     private String managerId;
+
+    @ManyToOne
+    private Department department;
 
     public Employee(){}
 
@@ -29,8 +31,24 @@ public class Employee {
         return Optional.of(name);
     }
 
+    public Long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
     public Optional<String> getManagerId() {
         return Optional.of(managerId);
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override

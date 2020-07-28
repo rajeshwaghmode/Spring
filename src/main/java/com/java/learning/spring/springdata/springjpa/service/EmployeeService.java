@@ -14,10 +14,6 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository){
-        this.employeeRepository = employeeRepository;
-    }
-
     public void saveEmployee(Employee employee){
         employeeRepository.save(employee);
     }
