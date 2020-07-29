@@ -1,9 +1,16 @@
 package com.java.learning.spring.springdata.springjpa.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.boot.model.relational.QualifiedSequenceName;
+
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import org.hibernate.annotations.Cache;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Department {
     @Id
     private Long id;

@@ -1,9 +1,14 @@
 package com.java.learning.spring.springdata.springjpa.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
+@Cacheable  //This is optional
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)  //Mandatory
 public class Employee {
     @Id
     private String id;

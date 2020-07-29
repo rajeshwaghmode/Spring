@@ -4,14 +4,18 @@ import com.java.learning.spring.springdata.springjpa.model.Department;
 import com.java.learning.spring.springdata.springjpa.model.Employee;
 import com.java.learning.spring.springdata.springjpa.service.DepartmentService;
 import com.java.learning.spring.springdata.springjpa.service.EmployeeService;
+import net.sf.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class SpringJpaAppStarter implements CommandLineRunner{
@@ -28,6 +32,12 @@ public class SpringJpaAppStarter implements CommandLineRunner{
 
     @Override
     public void run(String... args) {
+        System.out.println("Cache statistics at the start:");
+        CacheManager cacheManager = CacheManager.ALL_CACHE_MANAGERS.get(0);
+        Arrays.stream(cacheManager.getCacheNames())
+                .collect(Collectors.toMap(Function.identity(), cacheName -> cacheManager.getCache(cacheName).getSize()))
+                .forEach((k, v) -> System.out.println(k+ ":"+ v.intValue()));
+
         employeeService.saveAllEmployee(createAndGetEmployees());
 
         List<Employee> employeeList = employeeService.getAllEmployees();
@@ -38,6 +48,10 @@ public class SpringJpaAppStarter implements CommandLineRunner{
 
         reportees.stream().sorted((emp1, emp2)-> emp1.getId().compareTo(emp2.getId())).forEach(System.out::println);
 
+        System.out.println("Cache statistics at the end:");
+        Arrays.stream(cacheManager.getCacheNames())
+                .collect(Collectors.toMap(Function.identity(), cacheName -> cacheManager.getCache(cacheName).getSize()))
+                .forEach((k, v) -> System.out.println(k+ ":"+ v.intValue()));
         System.out.println("Completed execution of Application!!");
     }
 

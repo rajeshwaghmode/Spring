@@ -9,3 +9,14 @@ spring:
     password: mypass
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    database : H2
+    show_sql : true
+    properties:
+      hibernate.generate_statistics: false
+      hibernate.cache.use_query_cache: true
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+  h2:
+    console:
+      enabled: true
+
